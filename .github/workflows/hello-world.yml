@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
-          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
+          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}/
           if-no-files-found: error
 
   deploy:
