@@ -30,14 +30,14 @@ jobs:
           mkdir nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           cp -r sample_art nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           ls -la
-          zip -r merged.zip nordic_${{ steps.set-fw-version.outputs.FW_VER }}
+          zip -r nordic_${{ steps.set-fw-version.outputs.FW_VER }}.zip nordic_${{ steps.set-fw-version.outputs.FW_VER }}
 
 
       - name: Upload Firmware release artifact
         uses: actions/upload-artifact@v3
         with:
-          name: firmware
-          path: merged.zip
+          name: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
+          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}.zip
           if-no-files-found: error
 
   deploy:
@@ -63,7 +63,7 @@ jobs:
 
         with:
           files: |
-            firmware/*.zip
+            nordic_${{ steps.set-fw-version.outputs.FW_VER }}/*.zip
 
 
 
