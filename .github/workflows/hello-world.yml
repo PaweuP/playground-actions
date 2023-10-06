@@ -1,11 +1,59 @@
-name: Hello world
-
-on: [push]
+name: Build
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "**"
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  hello-world:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-22.04
+    needs: cancel
     steps:
-      - name: Hello world
+      - uses: actions/checkout@v3
+      - uses: MrSquaare/ssh-setup-action@v2
+        with:
+          host: github.com
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Release folder
         run: |
-          echo "Hello world"
+          fw_ver=0.0.5
+          echo "fw_ver=$fw_ver" >> $GITHUB_ENV
+          mkdir nordic_${fw_ver}
+          cp sample_art noridc_${fw_ver}
+
+
+      - name: Upload Firmware release artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: nordic_${{ env.fw_ver }}
+          path: nordic_${{ env.fw_ver }}/
+          if-no-files-found: error
+
+  deploy:
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: MrSquaare/ssh-setup-action@v2
+        with:
+          host: github.com
+          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+
+        with:
+          files: |
+            ev_nordic_${{ env.fw_ver }}/*
