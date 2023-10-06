@@ -44,22 +44,21 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build
     steps:
-      - env:
-          OUTPUT_FW_VER: ${{needs.build.outputs.fw_ver}}
-        run: echo "{OUTPUT_FW_VER}"
+      # - env:
+      #     OUTPUT_FW_VER: ${{needs.build.outputs.fw_ver}}
+      #   run: echo "$OUTPUT_FW_VER"
       - name: Download all build artifacts
         uses: actions/download-artifact@v3
 
       - name: Print fw ver
-        run: |
-          echo "$OUTPUT_FW_VER"
+        run: echo "${{needs.build.outputs.fw_ver}}"
 
       - name: Release
         uses: softprops/action-gh-release@v1
 
         with:
           files: |
-            ev_nordic_$OUTPUT_FW_VER/*
+            ev_nordic_${{needs.build.outputs.fw_ver}}/*
 
 
 # jobs:
