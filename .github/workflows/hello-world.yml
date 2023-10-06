@@ -62,7 +62,7 @@ jobs:
 
         with:
           files: |
-            nordic_${{needs.build.outputs.fw_ver}}/*.zip
+            nordic_${{needs.build.outputs.fw_ver}}/nordic*
 
 
 
