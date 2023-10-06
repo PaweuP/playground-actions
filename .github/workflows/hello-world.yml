@@ -18,20 +18,23 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set FW version
+        id: set-fw-version
+        run: |
+          run: echo "FW_VER=0.0.5" >> $GITHUB_OUTPUT
+
       - name: Release folder
         run: |
-          fw_ver=0.0.5
-          echo "fw_ver=$fw_ver" >> $GITHUB_OUTPUT
-          mkdir nordic_${fw_ver}
-          cp -r sample_art nordic_${fw_ver}
+          mkdir nordic_${FW_VER}
+          cp -r sample_art nordic_${FW_VER}
           ls -la
 
 
       - name: Upload Firmware release artifact
         uses: actions/upload-artifact@v3
         with:
-          name: nordic_${{ env.fw_ver }}
-          path: nordic_${{ env.fw_ver }}
+          name: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
+          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           if-no-files-found: error
 
   deploy:
@@ -43,11 +46,11 @@ jobs:
 
       - name: Print fw ver
         run: |
-          echo "${{ env.fw_ver }}"
+          echo "${{ steps.set-fw-version.outputs.FW_VER }}"
 
       - name: Release
         uses: softprops/action-gh-release@v1
 
         with:
           files: |
-            ev_nordic_${{ env.fw_ver }}/*
+            ev_nordic_${{ steps.set-fw-version.outputs.FW_VER }}/*
