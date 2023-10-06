@@ -63,7 +63,7 @@ jobs:
 
         with:
           files: |
-            nordic_${{ steps.set-fw-version.outputs.FW_VER }}/*.zip
+            nordic_${{needs.build.outputs.fw_ver}}/*.zip
 
 
 
