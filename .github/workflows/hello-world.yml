@@ -60,7 +60,7 @@ jobs:
 
         with:
           files: |
-            ev_nordic_${{needs.build.outputs.fw_ver}}/*
+            nordic_${{needs.build.outputs.fw_ver}}
 
 
 # jobs:
