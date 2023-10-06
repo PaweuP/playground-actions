@@ -30,13 +30,14 @@ jobs:
           mkdir nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           cp -r sample_art nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           ls -la
+          zip -r merged.zip nordic_${{ steps.set-fw-version.outputs.FW_VER }}
 
 
       - name: Upload Firmware release artifact
         uses: actions/upload-artifact@v3
         with:
-          name: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
-          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}/
+          name: firmware
+          path: merged.zip
           if-no-files-found: error
 
   deploy:
@@ -53,16 +54,16 @@ jobs:
       - name: Print fw ver
         run: |
           echo "${{needs.build.outputs.fw_ver}}"
-          ls -la
-          cd nordic_${{needs.build.outputs.fw_ver}}/
-          ls -la
+          # ls -la
+          # cd nordic_${{needs.build.outputs.fw_ver}}/
+          # ls -la
 
       - name: Release
         uses: softprops/action-gh-release@v1
 
         with:
           files: |
-            nordic_${{needs.build.outputs.fw_ver}}/nordic*
+            firmware/*.zip
 
 
 
