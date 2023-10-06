@@ -51,14 +51,16 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Print fw ver
-        run: echo "${{needs.build.outputs.fw_ver}}"
+        run: |
+          echo "${{needs.build.outputs.fw_ver}}"
+
 
       - name: Release
         uses: softprops/action-gh-release@v1
 
         with:
           files: |
-            ev_nordic_${{needs.build.outputs.fw_ver}}
+            ev_nordic_${{needs.build.outputs.fw_ver}}/*
 
 
 # jobs:
