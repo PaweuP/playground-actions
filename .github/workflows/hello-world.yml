@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: nordic_${{ env.fw_ver }}
-          path: nordic_${{ env.fw_ver }}/
+          path: nordic_${{ env.fw_ver }}
           if-no-files-found: error
 
   deploy:
