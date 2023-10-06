@@ -12,7 +12,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    needs: cancel
     steps:
       - uses: actions/checkout@v3
       - uses: MrSquaare/ssh-setup-action@v2
