@@ -38,11 +38,6 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-22.04
     steps:
-      - uses: MrSquaare/ssh-setup-action@v2
-        with:
-          host: github.com
-          private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Download all build artifacts
         uses: actions/download-artifact@v3
 
