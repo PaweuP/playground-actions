@@ -25,8 +25,8 @@ jobs:
 
       - name: Release folder
         run: |
-          mkdir nordic_${FW_VER}
-          cp -r sample_art nordic_${FW_VER}
+          mkdir nordic_${{ steps.set-fw-version.outputs.FW_VER }}
+          cp -r sample_art nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           ls -la
 
 
