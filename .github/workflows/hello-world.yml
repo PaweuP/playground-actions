@@ -60,7 +60,8 @@ jobs:
 
         with:
           files: |
-            nordic_${{needs.build.outputs.fw_ver}}
+            nordic_${{needs.build.outputs.fw_ver}}/*
+
 
 
 # jobs:
