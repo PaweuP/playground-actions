@@ -51,7 +51,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Print fw ver
-        run: echo "${{ env.OUTPUT_FW_VER }}"
+        run: echo "${{needs.build.outputs.fw_ver}}"
 
       - name: Release
         uses: softprops/action-gh-release@v1
