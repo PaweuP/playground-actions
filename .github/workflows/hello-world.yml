@@ -53,14 +53,16 @@ jobs:
       - name: Print fw ver
         run: |
           echo "${{needs.build.outputs.fw_ver}}"
-
+          ls -la
+          cd nordic
+          ls -la
 
       - name: Release
         uses: softprops/action-gh-release@v1
 
         with:
           files: |
-            nordic/*
+            nordic/
 
 
 
