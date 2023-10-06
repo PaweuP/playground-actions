@@ -21,7 +21,7 @@ jobs:
       - name: Release folder
         run: |
           fw_ver=0.0.5
-          echo "fw_ver=$fw_ver" >> $GITHUB_ENV
+          echo "fw_ver=$fw_ver" >> $GITHUB_OUTPUT
           mkdir nordic_${fw_ver}
           cp -r sample_art nordic_${fw_ver}
           ls -la
