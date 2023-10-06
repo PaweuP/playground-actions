@@ -12,8 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-    # outputs:
-    #   fw_ver: ${{ steps.set-fw-version.outputs.FW_VER }}
+    outputs:
+      fw_ver: ${{ steps.set-fw-version.outputs.FW_VER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -44,16 +44,19 @@ jobs:
     runs-on: ubuntu-22.04
     needs: build
     steps:
+      - env:
+          OUTPUT_FW_VER: ${{needs.build.outputs.fw_ver}}
+        run: echo "{OUTPUT_FW_VER}"
       - name: Download all build artifacts
         uses: actions/download-artifact@v3
 
       - name: Print fw ver
         run: |
-          echo "${{ steps.set-fw-version.outputs.FW_VER }}"
+          echo "${OUTPUT_FW_VER}"
 
       - name: Release
         uses: softprops/action-gh-release@v1
 
         with:
           files: |
-            ev_nordic_${{ steps.set-fw-version.outputs.FW_VER }}/*
+            ev_nordic_${OUTPUT_FW_VER}/*
