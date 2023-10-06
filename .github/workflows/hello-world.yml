@@ -23,7 +23,7 @@ jobs:
           fw_ver=0.0.5
           echo "fw_ver=$fw_ver" >> $GITHUB_ENV
           mkdir nordic_${fw_ver}
-          cp sample_art noridc_${fw_ver}
+          cp -r sample_art noridc_${fw_ver}
 
 
       - name: Upload Firmware release artifact
