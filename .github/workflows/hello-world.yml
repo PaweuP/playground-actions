@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "${{needs.build.outputs.fw_ver}}"
           ls -la
-          cd nordic
+          cd nordic/nordic_${{needs.build.outputs.fw_ver}}
           ls -la
 
       - name: Release
@@ -62,7 +62,7 @@ jobs:
 
         with:
           files: |
-            nordic/
+            nordic/nordic_${{needs.build.outputs.fw_ver}}
 
 
 
