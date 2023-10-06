@@ -35,8 +35,8 @@ jobs:
       - name: Upload Firmware release artifact
         uses: actions/upload-artifact@v3
         with:
-          name: nordic
-          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}/
+          name: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
+          path: nordic_${{ steps.set-fw-version.outputs.FW_VER }}
           if-no-files-found: error
 
   deploy:
@@ -54,7 +54,7 @@ jobs:
         run: |
           echo "${{needs.build.outputs.fw_ver}}"
           ls -la
-          cd nordic/nordic_${{needs.build.outputs.fw_ver}}
+          cd nordic_${{needs.build.outputs.fw_ver}}/
           ls -la
 
       - name: Release
@@ -62,7 +62,7 @@ jobs:
 
         with:
           files: |
-            nordic/nordic_${{needs.build.outputs.fw_ver}}
+            nordic_${{needs.build.outputs.fw_ver}}
 
 
 
